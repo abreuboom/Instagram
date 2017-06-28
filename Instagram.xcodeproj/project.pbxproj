@@ -7,8 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		20C4132B1F02FA5C00718081 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C4132A1F02FA5C00718081 /* LoginViewController.swift */; };
+		20C4132F1F02FFD100718081 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C4132E1F02FFD100718081 /* FeedViewController.swift */; };
+		20C413311F03002000718081 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C413301F03002000718081 /* CameraViewController.swift */; };
+		20C413331F03097700718081 /* ComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C413321F03097700718081 /* ComposeViewController.swift */; };
+		20C413351F030D8300718081 /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C413341F030D8300718081 /* PostCell.swift */; };
+		20C413371F03155F00718081 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C413361F03155F00718081 /* Post.swift */; };
+		20C413391F04132F00718081 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C413381F04132F00718081 /* ProfileViewController.swift */; };
+		20C4133B1F0419C900718081 /* UserPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C4133A1F0419C900718081 /* UserPostCell.swift */; };
+		20C4133D1F04238300718081 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C4133C1F04238300718081 /* SignupViewController.swift */; };
+		20C4133F1F04247C00718081 /* SignupDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C4133E1F04247C00718081 /* SignupDetailsViewController.swift */; };
 		20F1767C1F02BE2B00A0781D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F1767B1F02BE2B00A0781D /* AppDelegate.swift */; };
-		20F1767E1F02BE2B00A0781D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F1767D1F02BE2B00A0781D /* ViewController.swift */; };
 		20F176811F02BE2B00A0781D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20F1767F1F02BE2B00A0781D /* Main.storyboard */; };
 		20F176831F02BE2B00A0781D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20F176821F02BE2B00A0781D /* Assets.xcassets */; };
 		20F176861F02BE2B00A0781D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20F176841F02BE2B00A0781D /* LaunchScreen.storyboard */; };
@@ -38,9 +47,18 @@
 
 /* Begin PBXFileReference section */
 		120CA098F29905EC667DACD2 /* Pods_InstagramTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstagramTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		20C4132A1F02FA5C00718081 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		20C4132E1F02FFD100718081 /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
+		20C413301F03002000718081 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		20C413321F03097700718081 /* ComposeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeViewController.swift; sourceTree = "<group>"; };
+		20C413341F030D8300718081 /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
+		20C413361F03155F00718081 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		20C413381F04132F00718081 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		20C4133A1F0419C900718081 /* UserPostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserPostCell.swift; sourceTree = "<group>"; };
+		20C4133C1F04238300718081 /* SignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
+		20C4133E1F04247C00718081 /* SignupDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupDetailsViewController.swift; sourceTree = "<group>"; };
 		20F176781F02BE2B00A0781D /* Instagram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Instagram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		20F1767B1F02BE2B00A0781D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		20F1767D1F02BE2B00A0781D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		20F176801F02BE2B00A0781D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		20F176821F02BE2B00A0781D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		20F176851F02BE2B00A0781D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -114,9 +132,18 @@
 		20F1767A1F02BE2B00A0781D /* Instagram */ = {
 			isa = PBXGroup;
 			children = (
+				20C4132A1F02FA5C00718081 /* LoginViewController.swift */,
 				20F1767B1F02BE2B00A0781D /* AppDelegate.swift */,
-				20F1767D1F02BE2B00A0781D /* ViewController.swift */,
 				20F1767F1F02BE2B00A0781D /* Main.storyboard */,
+				20C4133E1F04247C00718081 /* SignupDetailsViewController.swift */,
+				20C4133C1F04238300718081 /* SignupViewController.swift */,
+				20C4133A1F0419C900718081 /* UserPostCell.swift */,
+				20C413381F04132F00718081 /* ProfileViewController.swift */,
+				20C413361F03155F00718081 /* Post.swift */,
+				20C413341F030D8300718081 /* PostCell.swift */,
+				20C413321F03097700718081 /* ComposeViewController.swift */,
+				20C413301F03002000718081 /* CameraViewController.swift */,
+				20C4132E1F02FFD100718081 /* FeedViewController.swift */,
 				20F176821F02BE2B00A0781D /* Assets.xcassets */,
 				20F176841F02BE2B00A0781D /* LaunchScreen.storyboard */,
 				20F176871F02BE2B00A0781D /* Info.plist */,
@@ -449,8 +476,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				20F1767E1F02BE2B00A0781D /* ViewController.swift in Sources */,
+				20C4133F1F04247C00718081 /* SignupDetailsViewController.swift in Sources */,
+				20C4133B1F0419C900718081 /* UserPostCell.swift in Sources */,
+				20C413331F03097700718081 /* ComposeViewController.swift in Sources */,
+				20C4133D1F04238300718081 /* SignupViewController.swift in Sources */,
+				20C4132B1F02FA5C00718081 /* LoginViewController.swift in Sources */,
+				20C413311F03002000718081 /* CameraViewController.swift in Sources */,
+				20C4132F1F02FFD100718081 /* FeedViewController.swift in Sources */,
 				20F1767C1F02BE2B00A0781D /* AppDelegate.swift in Sources */,
+				20C413371F03155F00718081 /* Post.swift in Sources */,
+				20C413391F04132F00718081 /* ProfileViewController.swift in Sources */,
+				20C413351F030D8300718081 /* PostCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -707,6 +743,7 @@
 				20F176A21F02BE2B00A0781D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		20F176A31F02BE2B00A0781D /* Build configuration list for PBXNativeTarget "InstagramTests" */ = {
 			isa = XCConfigurationList;
@@ -715,6 +752,7 @@
 				20F176A51F02BE2B00A0781D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		20F176A61F02BE2B00A0781D /* Build configuration list for PBXNativeTarget "InstagramUITests" */ = {
 			isa = XCConfigurationList;
@@ -723,6 +761,7 @@
 				20F176A81F02BE2B00A0781D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

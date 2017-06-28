@@ -7,6 +7,10 @@ target 'Instagram' do
 
   # Pods for Instagram
 pod 'Parse'
+pod 'Alamofire', '~> 4.4'
+pod 'OAuthSwift', '~> 1.1.0'
+pod 'OAuthSwiftAlamofire'
+pod 'AlamofireImage', '~> 3.1'
 
   target 'InstagramTests' do
     inherit! :search_paths

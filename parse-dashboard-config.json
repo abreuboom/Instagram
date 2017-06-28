@@ -1,0 +1,10 @@
+{
+  "apps": [
+    {
+      "serverURL": "https://fbu-instagram.herokuapp.com/parse",
+      "appId": "fbu-instagramID",
+      "masterKey": "9295008986",
+      "appName": "fbu-instagram"
+    }
+  ]
+}
