@@ -15,6 +15,10 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     var posts: [PFObject] = []
     
+    override func viewWillAppear(_ animated: Bool) {
+        getData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -24,7 +28,8 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         // add refresh control to table view
         postView.insertSubview(refreshControl, at: 0)
         
-        getData()
+        Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.getData), userInfo: nil, repeats: true)
+        postView.reloadData()
         
         postView.delegate = self
         postView.dataSource = self
