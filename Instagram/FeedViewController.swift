@@ -10,7 +10,7 @@ import UIKit
 import Parse
 
 class FeedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
+    
     @IBOutlet weak var postView: UITableView!
     
     var posts: [PFObject] = []
@@ -71,25 +71,32 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         postView.reloadData()
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return posts.count
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = postView.dequeueReusableCell(withIdentifier: "PostCell") as! PostCell
-        let post = posts[indexPath.row]
+        let post = posts[indexPath.section]
         
         if let text = post["caption"] as? String {
+            if let user = post["author"] as? PFUser {
+                let normalText = NSMutableAttributedString(string: " " + text)
+                let bold = [NSFontAttributeName : UIFont.boldSystemFont(ofSize: 14)]
+                let username = user.username
+                print(username!)
+                let totalString = NSMutableAttributedString(string: username!, attributes: bold)
+                totalString.append(normalText)
+                
+                cell.caption.attributedText = normalText
+            }
+            else {
             cell.caption.text = text
-            print(cell.caption.text ?? "NOOOO")
-        }
-        
-        if let user = post["author"] as? PFUser {
-            // User found! update username label with username
-            cell.sender.text = user.username
-        } else {
-            // No user found, set default username
-            cell.sender.text = "🤖"
+            }
         }
         
         if let photo = post["media"] as? PFFile {
@@ -105,7 +112,44 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.selectionStyle = .none
         
         return cell
-
+        
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 50))
+        headerView.backgroundColor = UIColor.init(red: 246, green: 246, blue: 246, alpha: 1)
+        let proPic = UIImageView(frame: CGRect(x: 8, y: 10, width: 30, height: 30))
+        let username = UILabel(frame: CGRect(x: proPic.frame.maxX + 16, y: 0, width: self.view.frame.width - 50, height: headerView.frame.height))
+        
+        username.font = UIFont.boldSystemFont(ofSize: 14)
+        
+        let post = posts[section]
+        
+        if let user = post["author"] as? PFUser {
+            username.text = user.username
+            
+            if let photo = user.object(forKey: "ProfilePhoto") as? PFFile {
+                photo.getDataInBackground(block: {
+                    (imageData: Data?, error: Error?) -> Void in
+                    if (error == nil) {
+                        let image = UIImage(data:imageData!)
+                        proPic.image = image
+                    }
+                })
+            }
+            else {
+                proPic.image = #imageLiteral(resourceName: "temp-profile")
+            }
+        }
+        
+        headerView.addSubview(proPic)
+        headerView.addSubview(username)
+        
+        return headerView
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
     }
     
     @IBAction func logOut(_ sender: UIBarButtonItem) {
@@ -122,15 +166,15 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

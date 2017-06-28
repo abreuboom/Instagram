@@ -12,7 +12,7 @@ class PostCell: UITableViewCell {
 
     @IBOutlet weak var photoView: UIImageView!
     @IBOutlet weak var caption: UILabel!
-    @IBOutlet weak var sender: UILabel!
+    @IBOutlet weak var time: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
