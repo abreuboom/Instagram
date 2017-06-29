@@ -1,30 +1,21 @@
 PODS:
   - Alamofire (4.5.0)
-  - AlamofireImage (3.2.0):
-    - Alamofire (~> 4.1)
   - Bolts/Tasks (1.8.4)
-  - OAuthSwift (1.1.2)
-  - OAuthSwiftAlamofire (0.1.0):
-    - Alamofire
-    - OAuthSwift
+  - CameraManager (3.1.4)
   - Parse (1.14.4):
     - Bolts/Tasks (~> 1.8)
 
 DEPENDENCIES:
   - Alamofire (~> 4.4)
-  - AlamofireImage (~> 3.1)
-  - OAuthSwift (~> 1.1.0)
-  - OAuthSwiftAlamofire
+  - CameraManager (~> 3.1)
   - Parse
 
 SPEC CHECKSUMS:
   Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
-  AlamofireImage: 157ed682cc81d3b9db4fb90c1f12180ac552d93b
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
-  OAuthSwift: 5aa5659984d3ca3206ba636a9e7a9c6626b2e8bd
-  OAuthSwiftAlamofire: 20bb998ac506f82c3bab0625fbc98a9c6fca783f
+  CameraManager: 837ff54004e37b83533abf0543daf143fae851e4
   Parse: b0aa91d2c435e53d4a9af26e741e014c9b35c42e
 
-PODFILE CHECKSUM: 29b0126273b14d5562f455ee69607433118d6da6
+PODFILE CHECKSUM: 64c35cb8f2ac9bb85d423ed068978c05a4a9e13c
 
 COCOAPODS: 1.2.1

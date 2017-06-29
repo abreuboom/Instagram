@@ -9,11 +9,16 @@
 import UIKit
 import Parse
 
-class FeedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class FeedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
     
     @IBOutlet weak var postView: UITableView!
     
     var posts: [PFObject] = []
+    
+    var isMoreDataLoading = false
+    var loadingMoreView:InfiniteScrollActivityView?
+    
+    var queryLimit = 20
     
     override func viewWillAppear(_ animated: Bool) {
         getData()
@@ -28,13 +33,57 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         // add refresh control to table view
         postView.insertSubview(refreshControl, at: 0)
         
+        // Set up Infinite Scroll loading indicator
+        let frame = CGRect(x: 0, y: postView.contentSize.height, width: postView.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
+        loadingMoreView = InfiniteScrollActivityView(frame: frame)
+        loadingMoreView!.isHidden = true
+        postView.addSubview(loadingMoreView!)
+        
+        var insets = postView.contentInset
+        insets.bottom += InfiniteScrollActivityView.defaultHeight
+        postView.contentInset = insets
+        
+        
+        
         Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.getData), userInfo: nil, repeats: true)
         postView.reloadData()
         
         postView.delegate = self
         postView.dataSource = self
         
+        self.postView.separatorStyle = .none
+        
         // Do any additional setup after loading the view.
+    }
+    
+    func loadMoreData() {
+        queryLimit += 20
+        getData()
+        isMoreDataLoading = false
+        self.loadingMoreView!.stopAnimating()
+        
+        postView.reloadData()
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (!isMoreDataLoading) {
+            // Calculate the position of one screen length before the bottom of the results
+            let scrollViewContentHeight = postView.contentSize.height
+            let scrollOffsetThreshold = scrollViewContentHeight - postView.bounds.size.height
+            
+            // When the user has scrolled past the threshold, start requesting
+            if(scrollView.contentOffset.y > scrollOffsetThreshold && postView.isDragging) {
+                isMoreDataLoading = true
+                
+                // Update position of loadingMoreView, and start loading indicator
+                let frame = CGRect(x: 0, y: postView.contentSize.height, width: postView.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
+                loadingMoreView?.frame = frame
+                loadingMoreView!.startAnimating()
+                
+                // ... Code to load more results ...
+                loadMoreData()
+            }
+        }
     }
     
     func refreshControlAction(_ refreshControl: UIRefreshControl) {
@@ -57,7 +106,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     func getData () {
         let query = PFQuery(className: "Post")
         query.includeKey("author")
-        query.limit = 20
+        query.limit = queryLimit
         query.addDescendingOrder("createdAt")
         
         query.findObjectsInBackground() {(allPosts: [PFObject]?, error: Error?) -> Void in
@@ -71,15 +120,25 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         postView.reloadData()
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
+    func prettyDate(date: String) -> String{
+        let format = DateFormatter()
+        let prettyformat = DateFormatter()
+        format.dateFormat = "yyyy-MM-dd HH:mm:ssZZZZ"
+        let finalDate = format.date(from: date)
+        prettyformat.dateFormat = "HH:mm:ss, MMM dd, yyyy"
+        let text = prettyformat.string(from: finalDate!)
+        return text
+    }
+    
+    func numberOfSections(in postView: UITableView) -> Int {
         return posts.count
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ postView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ postView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = postView.dequeueReusableCell(withIdentifier: "PostCell") as! PostCell
         let post = posts[indexPath.section]
         
@@ -109,17 +168,24 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
             })
         }
         
+        if let time = post.createdAt {
+            cell.time.text = prettyDate(date: time.description)
+        }
+        
         cell.selectionStyle = .none
         
         return cell
         
     }
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ postView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 50))
-        headerView.backgroundColor = UIColor.init(red: 246, green: 246, blue: 246, alpha: 1)
+        headerView.backgroundColor = .white
         let proPic = UIImageView(frame: CGRect(x: 8, y: 10, width: 30, height: 30))
         let username = UILabel(frame: CGRect(x: proPic.frame.maxX + 16, y: 0, width: self.view.frame.width - 50, height: headerView.frame.height))
+        
+        proPic.layer.cornerRadius = proPic.frame.width / 2
+        proPic.layer.masksToBounds = true
         
         username.font = UIFont.boldSystemFont(ofSize: 14)
         
@@ -142,13 +208,14 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
         }
         
+        
         headerView.addSubview(proPic)
         headerView.addSubview(username)
         
         return headerView
     }
     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ postView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 50
     }
     

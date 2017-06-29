@@ -17,6 +17,7 @@
 		20C4133B1F0419C900718081 /* UserPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C4133A1F0419C900718081 /* UserPostCell.swift */; };
 		20C4133D1F04238300718081 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C4133C1F04238300718081 /* SignupViewController.swift */; };
 		20C4133F1F04247C00718081 /* SignupDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C4133E1F04247C00718081 /* SignupDetailsViewController.swift */; };
+		20C413411F0486C800718081 /* InfiniteScrollActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C413401F0486C800718081 /* InfiniteScrollActivityView.swift */; };
 		20F1767C1F02BE2B00A0781D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F1767B1F02BE2B00A0781D /* AppDelegate.swift */; };
 		20F176811F02BE2B00A0781D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20F1767F1F02BE2B00A0781D /* Main.storyboard */; };
 		20F176831F02BE2B00A0781D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20F176821F02BE2B00A0781D /* Assets.xcassets */; };
@@ -57,6 +58,7 @@
 		20C4133A1F0419C900718081 /* UserPostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserPostCell.swift; sourceTree = "<group>"; };
 		20C4133C1F04238300718081 /* SignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		20C4133E1F04247C00718081 /* SignupDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupDetailsViewController.swift; sourceTree = "<group>"; };
+		20C413401F0486C800718081 /* InfiniteScrollActivityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfiniteScrollActivityView.swift; sourceTree = "<group>"; };
 		20F176781F02BE2B00A0781D /* Instagram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Instagram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		20F1767B1F02BE2B00A0781D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		20F176801F02BE2B00A0781D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 				20C413321F03097700718081 /* ComposeViewController.swift */,
 				20C413301F03002000718081 /* CameraViewController.swift */,
 				20C4132E1F02FFD100718081 /* FeedViewController.swift */,
+				20C413401F0486C800718081 /* InfiniteScrollActivityView.swift */,
 				20F176821F02BE2B00A0781D /* Assets.xcassets */,
 				20F176841F02BE2B00A0781D /* LaunchScreen.storyboard */,
 				20F176871F02BE2B00A0781D /* Info.plist */,
@@ -476,6 +479,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20C413411F0486C800718081 /* InfiniteScrollActivityView.swift in Sources */,
 				20C4133F1F04247C00718081 /* SignupDetailsViewController.swift in Sources */,
 				20C4133B1F0419C900718081 /* UserPostCell.swift in Sources */,
 				20C413331F03097700718081 /* ComposeViewController.swift in Sources */,

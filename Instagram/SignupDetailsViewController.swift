@@ -24,6 +24,9 @@ class SignupDetailsViewController: UIViewController, UIImagePickerControllerDele
         super.viewDidLoad()
         
         signupButton.layer.cornerRadius = 5
+        
+        photoView.layer.cornerRadius = photoView.frame.width / 2
+        photoView.layer.masksToBounds = true
 
         // Do any additional setup after loading the view.
     }
@@ -50,6 +53,7 @@ class SignupDetailsViewController: UIViewController, UIImagePickerControllerDele
         let editedImage = info[UIImagePickerControllerEditedImage] as! UIImage
         
         photoView.image = editedImage
+        
         // Do something with the images (based on your use case)
         
         // Dismiss UIImagePickerController to go back to your original view controller

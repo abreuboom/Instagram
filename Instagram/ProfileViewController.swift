@@ -35,14 +35,19 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         // add refresh control to table view
         postView.insertSubview(refreshControl, at: 0)
         
+        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
+        flowLayout.itemSize = CGSize(width: view.frame.width/3, height: view.frame.width/3)
+        flowLayout.minimumInteritemSpacing = 0
+        flowLayout.minimumLineSpacing = 2
+        
+        profilePhotoView.layer.cornerRadius = profilePhotoView.frame.width / 2
+        profilePhotoView.layer.masksToBounds = true
+        
         postView.delegate = self
         postView.dataSource = self
         
         fillUserData()
         
-        flowLayout.minimumLineSpacing = 0
-        flowLayout.minimumInteritemSpacing = 0
-        flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
         
         // Do any additional setup after loading the view.
     }
@@ -51,8 +56,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         let user = PFUser.current()
         // User found! update username label with username
         navLabel.title = user?.username
-        nameLabel.text = user?.object(forKey: "Name") as? String
-        aboutLabel.text = user?.object(forKey: "About") as? String
+        nameLabel.text = user?.object(forKey: "Name") as? String ?? "[blank]"
+        aboutLabel.text = user?.object(forKey: "About") as? String ?? "[blank]"
         
         if let photo = user?.object(forKey: "ProfilePhoto")as? PFFile {
             photo.getDataInBackground(block: {
@@ -63,9 +68,9 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
                 }
             })
         }
-        print(posts.count)
-        postCount.text = String(posts.count)
-        
+        else {
+            self.profilePhotoView.image = #imageLiteral(resourceName: "temp-profile")
+        }
     }
     
     func refreshControlAction(_ refreshControl: UIRefreshControl) {
@@ -123,6 +128,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
                 }
             })
         }
+        
+        cell.photoView.frame.size = flowLayout.itemSize
         
         return cell
     }
