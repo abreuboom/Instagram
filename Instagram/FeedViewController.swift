@@ -12,6 +12,7 @@ import Parse
 class FeedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
     
     @IBOutlet weak var postView: UITableView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var posts: [PFObject] = []
     
@@ -21,11 +22,16 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     var queryLimit = 20
     
     override func viewWillAppear(_ animated: Bool) {
-        getData()
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        activityIndicator.startAnimating()
+        
+        let attributes = [NSFontAttributeName : UIFont(name: "Sugarstyle Millenial", size: 30)!, NSForegroundColorAttributeName : UIColor.black]
+        self.navigationController?.navigationBar.titleTextAttributes = attributes
         
         // Initialize a UIRefreshControl
         let refreshControl = UIRefreshControl()
@@ -39,14 +45,12 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         loadingMoreView!.isHidden = true
         postView.addSubview(loadingMoreView!)
         
+        getData()
+        
+        
         var insets = postView.contentInset
         insets.bottom += InfiniteScrollActivityView.defaultHeight
         postView.contentInset = insets
-        
-        
-        
-        Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.getData), userInfo: nil, repeats: true)
-        postView.reloadData()
         
         postView.delegate = self
         postView.dataSource = self
@@ -92,7 +96,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func alert() {
-        let alertController = UIAlertController(title: "Cannot Get Messages", message: "The internet connection appears to be offline", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Cannot Get Posts", message: "The internet connection appears to be offline", preferredStyle: .alert)
         // create an OK action
         let OKAction = UIAlertAction(title: "OK", style: .default) { (action) in
             // handle response here.
@@ -115,9 +119,13 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
                 print(error.localizedDescription)
             } else {
                 self.posts = allPosts!
+                self.postView.reloadData()
+                
             }
         }
         postView.reloadData()
+        activityIndicator.stopAnimating()
+        
     }
     
     func prettyDate(date: String) -> String{
@@ -142,19 +150,21 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         let cell = postView.dequeueReusableCell(withIdentifier: "PostCell") as! PostCell
         let post = posts[indexPath.section]
         
+        cell.layer.cornerRadius = 25
+        cell.layer.masksToBounds = true
+        
         if let text = post["caption"] as? String {
             if let user = post["author"] as? PFUser {
                 let normalText = NSMutableAttributedString(string: " " + text)
                 let bold = [NSFontAttributeName : UIFont.boldSystemFont(ofSize: 14)]
                 let username = user.username
-                print(username!)
                 let totalString = NSMutableAttributedString(string: username!, attributes: bold)
                 totalString.append(normalText)
                 
-                cell.caption.attributedText = normalText
+                cell.caption.attributedText = totalString
             }
             else {
-            cell.caption.text = text
+                cell.caption.text = text
             }
         }
         
@@ -168,11 +178,36 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
             })
         }
         
+        if let likes = post["likeList"] as? [PFUser] {
+            let likeCount = likes.count
+            print(likeCount)
+            if likeCount == 1 {
+                cell.likes.text = "\(likeCount) like"
+                if likes.contains(PFUser.current()!) == true {
+                    cell.likeButton.imageView?.image = #imageLiteral(resourceName: "heart-filled")
+                }
+            }
+            else if likeCount > 1 {
+                cell.likes.text = "\(likeCount) likes"
+                if likes.contains(PFUser.current()!) == true {
+                    cell.likeButton.imageView?.image = #imageLiteral(resourceName: "heart-filled")
+                }
+            }
+            else {
+                cell.likes.text = "0 likes"
+            }
+            
+            
+        }
+        
         if let time = post.createdAt {
             cell.time.text = prettyDate(date: time.description)
         }
         
+        cell.likeButton.tag = indexPath.section
+        
         cell.selectionStyle = .none
+        
         
         return cell
         
@@ -180,7 +215,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ postView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 50))
-        headerView.backgroundColor = .white
+        headerView.backgroundColor = UIColor(red: 239/255, green: 239/255, blue: 244/255, alpha: 1)
         let proPic = UIImageView(frame: CGRect(x: 8, y: 10, width: 30, height: 30))
         let username = UILabel(frame: CGRect(x: proPic.frame.maxX + 16, y: 0, width: self.view.frame.width - 50, height: headerView.frame.height))
         
@@ -219,6 +254,34 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         return 50
     }
     
+    @IBAction func likePost(_ sender: UIButton) {
+        let post = posts[sender.tag]
+        let query = PFQuery(className:"Post")
+        query.getObjectInBackground(withId: post.objectId!) {
+            (post: PFObject?, error: Error?) -> Void in
+            if error != nil {
+                print(error?.localizedDescription)
+                print("nope")
+            } else {
+                if let likeList = post?["likeList"] as? [PFUser]{
+                    if likeList.contains(PFUser.current()!) {
+                        post?.remove(PFUser.current()!, forKey: "likeList")
+                        sender.imageView?.image = #imageLiteral(resourceName: "heart")
+                        print("unliked post")
+                    }
+                    else {
+                        post?.addUniqueObject(PFUser.current()!, forKey:"likeList")
+                        sender.imageView?.image = #imageLiteral(resourceName: "heart-filled")
+                        print("liked post")
+                    }
+                    post?.saveInBackground()
+                    self.postView.reloadData()
+                }
+                
+            }
+        }
+    }
+    
     @IBAction func logOut(_ sender: UIBarButtonItem) {
         PFUser.logOut()
         
@@ -234,14 +297,13 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let cell = sender as! UITableViewCell
+        if let indexPath =  postView.indexPath(for: cell) {
+            let post = posts[indexPath.section]
+            let detailViewController = segue.destination as! DetailViewController
+            detailViewController.post = post
+        }
+    }
     
 }

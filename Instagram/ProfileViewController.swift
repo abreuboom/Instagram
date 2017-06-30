@@ -20,10 +20,18 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     @IBOutlet weak var profilePhotoView: UIImageView!
     @IBOutlet weak var aboutLabel: UILabel!
     
+    @IBOutlet weak var editProfileButton: UIButton!
+    
     var posts: [PFObject] = []
     
     override func viewWillAppear(_ animated: Bool) {
         getData()
+        fillUserData()
+        
+        editProfileButton.layer.borderWidth = 1
+        editProfileButton.layer.borderColor = UIColor.lightGray.cgColor
+        editProfileButton.layer.cornerRadius = 6
+        editProfileButton.layer.masksToBounds = true
     }
     
     override func viewDidLoad() {
@@ -36,17 +44,15 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         postView.insertSubview(refreshControl, at: 0)
         
         flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
-        flowLayout.itemSize = CGSize(width: view.frame.width/3, height: view.frame.width/3)
+        flowLayout.itemSize = CGSize(width: (view.frame.width/3)-1, height: view.frame.width/3)
         flowLayout.minimumInteritemSpacing = 0
-        flowLayout.minimumLineSpacing = 2
+        flowLayout.minimumLineSpacing = 1
         
         profilePhotoView.layer.cornerRadius = profilePhotoView.frame.width / 2
         profilePhotoView.layer.masksToBounds = true
         
         postView.delegate = self
         postView.dataSource = self
-        
-        fillUserData()
         
         
         // Do any additional setup after loading the view.
@@ -104,9 +110,10 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
                 print(error.localizedDescription)
             } else {
                 self.posts = allPosts!
+                self.postView.reloadData()
             }
         }
-        self.postView.reloadData()
+        postView.reloadData()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -138,16 +145,19 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "editProfileSegue" {
+        }
+        else {
+            let cell = sender as! UICollectionViewCell
+            if let indexPath =  postView.indexPath(for: cell) {
+                let post = posts[indexPath.item]
+                let detailViewController = segue.destination as! DetailViewController
+                detailViewController.post = post
+            }
+        
+        }
+    }
     
 }

@@ -13,6 +13,9 @@ class PostCell: UITableViewCell {
     @IBOutlet weak var photoView: UIImageView!
     @IBOutlet weak var caption: UILabel!
     @IBOutlet weak var time: UILabel!
+    @IBOutlet weak var likes: UILabel!
+    
+    @IBOutlet weak var likeButton: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()

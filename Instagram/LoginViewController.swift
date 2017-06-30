@@ -20,9 +20,15 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loginButton.layer.cornerRadius = 5
-        signUpButton.layer.cornerRadius = 5
-
+        usernameField.attributedPlaceholder = NSAttributedString(string: "username", attributes: [NSForegroundColorAttributeName:UIColor.white])
+        passwordField.attributedPlaceholder = NSAttributedString(string: "password", attributes: [NSForegroundColorAttributeName:UIColor.white])
+        
+        loginButton.layer.cornerRadius = 10
+        loginButton.layer.masksToBounds = true
+        
+        signUpButton.layer.cornerRadius = 10
+        signUpButton.layer.masksToBounds = true
+        
         // Do any additional setup after loading the view.
     }
 

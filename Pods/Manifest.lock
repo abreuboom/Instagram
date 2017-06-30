@@ -1,21 +1,21 @@
 PODS:
-  - Alamofire (4.5.0)
   - Bolts/Tasks (1.8.4)
   - CameraManager (3.1.4)
   - Parse (1.14.4):
     - Bolts/Tasks (~> 1.8)
+  - Sharaku (1.0.2)
 
 DEPENDENCIES:
-  - Alamofire (~> 4.4)
   - CameraManager (~> 3.1)
   - Parse
+  - Sharaku
 
 SPEC CHECKSUMS:
-  Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   CameraManager: 837ff54004e37b83533abf0543daf143fae851e4
   Parse: b0aa91d2c435e53d4a9af26e741e014c9b35c42e
+  Sharaku: c18de569fc99f6e936f46ca812b571826cc658a7
 
-PODFILE CHECKSUM: 64c35cb8f2ac9bb85d423ed068978c05a4a9e13c
+PODFILE CHECKSUM: 2689155ccd86c60d0f1484b8ddaa3c4b083ee120
 
 COCOAPODS: 1.2.1

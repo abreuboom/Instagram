@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		205D674C1F05711300D7452F /* SugarstyleMillenial-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 205D674B1F05711300D7452F /* SugarstyleMillenial-Regular.ttf */; };
+		205D674E1F05950C00D7452F /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205D674D1F05950C00D7452F /* DetailViewController.swift */; };
+		205D67501F05AAFA00D7452F /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205D674F1F05AAFA00D7452F /* EditProfileViewController.swift */; };
 		20C4132B1F02FA5C00718081 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C4132A1F02FA5C00718081 /* LoginViewController.swift */; };
 		20C4132F1F02FFD100718081 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C4132E1F02FFD100718081 /* FeedViewController.swift */; };
 		20C413311F03002000718081 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C413301F03002000718081 /* CameraViewController.swift */; };
@@ -48,6 +51,9 @@
 
 /* Begin PBXFileReference section */
 		120CA098F29905EC667DACD2 /* Pods_InstagramTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstagramTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		205D674B1F05711300D7452F /* SugarstyleMillenial-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SugarstyleMillenial-Regular.ttf"; sourceTree = "<group>"; };
+		205D674D1F05950C00D7452F /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		205D674F1F05AAFA00D7452F /* EditProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		20C4132A1F02FA5C00718081 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		20C4132E1F02FFD100718081 /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		20C413301F03002000718081 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
@@ -134,9 +140,12 @@
 		20F1767A1F02BE2B00A0781D /* Instagram */ = {
 			isa = PBXGroup;
 			children = (
+				205D674B1F05711300D7452F /* SugarstyleMillenial-Regular.ttf */,
 				20C4132A1F02FA5C00718081 /* LoginViewController.swift */,
 				20F1767B1F02BE2B00A0781D /* AppDelegate.swift */,
 				20F1767F1F02BE2B00A0781D /* Main.storyboard */,
+				205D674F1F05AAFA00D7452F /* EditProfileViewController.swift */,
+				205D674D1F05950C00D7452F /* DetailViewController.swift */,
 				20C4133E1F04247C00718081 /* SignupDetailsViewController.swift */,
 				20C4133C1F04238300718081 /* SignupViewController.swift */,
 				20C4133A1F0419C900718081 /* UserPostCell.swift */,
@@ -314,6 +323,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				205D674C1F05711300D7452F /* SugarstyleMillenial-Regular.ttf in Resources */,
 				20F176861F02BE2B00A0781D /* LaunchScreen.storyboard in Resources */,
 				20F176831F02BE2B00A0781D /* Assets.xcassets in Resources */,
 				20F176811F02BE2B00A0781D /* Main.storyboard in Resources */,
@@ -479,11 +489,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				205D674E1F05950C00D7452F /* DetailViewController.swift in Sources */,
 				20C413411F0486C800718081 /* InfiniteScrollActivityView.swift in Sources */,
 				20C4133F1F04247C00718081 /* SignupDetailsViewController.swift in Sources */,
 				20C4133B1F0419C900718081 /* UserPostCell.swift in Sources */,
 				20C413331F03097700718081 /* ComposeViewController.swift in Sources */,
 				20C4133D1F04238300718081 /* SignupViewController.swift in Sources */,
+				205D67501F05AAFA00D7452F /* EditProfileViewController.swift in Sources */,
 				20C4132B1F02FA5C00718081 /* LoginViewController.swift in Sources */,
 				20C413311F03002000718081 /* CameraViewController.swift in Sources */,
 				20C4132F1F02FFD100718081 /* FeedViewController.swift in Sources */,

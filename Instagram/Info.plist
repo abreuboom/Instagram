@@ -38,5 +38,21 @@
 	</array>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We&apos;re going to need access to your photos so you can share them with the government!</string>
+	<key>LSApplicationCategoryType</key>
+	<string>&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;
+&lt;dict&gt;
+    &lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&lt;true/&gt;
+&lt;/dict&gt;</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>SugarstyleMillenial-Regular.ttf</string>
+	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We need access to your location!</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 </dict>
 </plist>

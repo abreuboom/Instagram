@@ -31,6 +31,7 @@ class Post: NSObject {
         post["caption"] = caption
         post["likesCount"] = 0
         post["commentsCount"] = 0
+        post["likeList"] = []
         
         // Save object (following function will save the object in Parse asynchronously)
         post.saveInBackground { (success, error) in
@@ -41,7 +42,6 @@ class Post: NSObject {
             }
         }
     }
-    
     /**
      Method to convert UIImage to PFFile
      

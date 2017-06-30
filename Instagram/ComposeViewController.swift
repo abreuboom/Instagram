@@ -9,7 +9,7 @@
 import UIKit
 
 class ComposeViewController: UIViewController {
-
+    
     @IBOutlet weak var photoView: UIImageView!
     @IBOutlet weak var captionField: UITextField!
     
@@ -17,10 +17,7 @@ class ComposeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        print("yeah")
-        
-        self.photoView.image = chosenPhoto
+        photoView.image = chosenPhoto
         
         chosenPhoto = resize(image: chosenPhoto!, newSize: CGSize(width: 1000, height: 1000))
         
@@ -44,7 +41,7 @@ class ComposeViewController: UIViewController {
     
     func resize(image: UIImage, newSize: CGSize) -> UIImage {
         let resizeImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
-
+        
         resizeImageView.contentMode = UIViewContentMode.scaleAspectFill
         resizeImageView.image = image
         
@@ -54,7 +51,7 @@ class ComposeViewController: UIViewController {
         UIGraphicsEndImageContext()
         return newImage!
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

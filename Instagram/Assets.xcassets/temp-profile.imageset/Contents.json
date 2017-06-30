@@ -2,11 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "ProPic.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "temp-profile.png",
+      "filename" : "ProPic 2x.png",
       "scale" : "2x"
     },
     {
