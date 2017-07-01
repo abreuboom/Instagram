@@ -17,9 +17,14 @@ class ComposeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        photoView.image = chosenPhoto
         
         chosenPhoto = resize(image: chosenPhoto!, newSize: CGSize(width: 1000, height: 1000))
+        
+        photoView.image = chosenPhoto
+        
+        captionField.becomeFirstResponder()
+        
+        
         
         // Do any additional setup after loading the view.
     }
@@ -34,7 +39,7 @@ class ComposeViewController: UIViewController {
             if let error = error {
                 print(error.localizedDescription)
             } else {
-                self.performSegue(withIdentifier: "loginSegue", sender: sender)
+                self.performSegue(withIdentifier: "postedSegue", sender: sender)
             }
         }
     }
@@ -55,5 +60,10 @@ class ComposeViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let feedViewController = segue.destination as! FeedViewController
+        feedViewController.getDataAfterNewPost()
     }
 }

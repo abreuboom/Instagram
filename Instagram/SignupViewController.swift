@@ -15,12 +15,21 @@ class SignupViewController: UIViewController {
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet var passwordField: UITextField!
     @IBOutlet weak var signUpButton: UIButton!
+    @IBOutlet weak var signInButton: UIButton!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        signUpButton.layer.cornerRadius = 5
+        emailField.attributedPlaceholder = NSAttributedString(string: "email", attributes: [NSForegroundColorAttributeName:UIColor.white])
+        usernameField.attributedPlaceholder = NSAttributedString(string: "username", attributes: [NSForegroundColorAttributeName:UIColor.white])
+        passwordField.attributedPlaceholder = NSAttributedString(string: "password", attributes: [NSForegroundColorAttributeName:UIColor.white])
+        
+        signInButton.layer.cornerRadius = 10
+        signInButton.layer.masksToBounds = true
+        
+        signUpButton.layer.cornerRadius = 10
+        signUpButton.layer.masksToBounds = true
         
         // Do any additional setup after loading the view.
     }

@@ -19,6 +19,8 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet weak var flashButton: UIButton!
     
     let cameraManager = CameraManager()
+    let picker = UIImagePickerController()
+    
     
     var capturedPhoto: UIImage?
     
@@ -29,6 +31,9 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        picker.delegate = self
+        picker.allowsEditing = true
         
         captureButton.layer.cornerRadius = captureButton.frame.width / 2
         captureButton.layer.masksToBounds = true
@@ -54,9 +59,9 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
                 let vc = SHViewController(image: imageToBeFiltered!)
                 vc.delegate = self
                 self.present(vc, animated:true, completion: nil)
-                self.performSegue(withIdentifier: "composeSegue", sender: sender)
             }
         })
+        
     }
     
     @IBAction func flipCamera(_ sender: UIButton) {
@@ -85,14 +90,19 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         // Get the image captured by the UIImagePickerController
         let editedImage = info[UIImagePickerControllerEditedImage] as! UIImage
         
-        capturedPhoto = editedImage
-        
         // Do something with the images (based on your use case)
         
-        // Dismiss UIImagePickerController to go back to your original view controller
-        dismiss(animated: true, completion: nil)
         
-        performSegue(withIdentifier: "composeSegue", sender: self)
+        // Dismiss UIImagePickerController to go back to your original view controller
+        dismiss(animated: true) { 
+            print("perform segue")
+            let imageToBeFiltered = editedImage
+            let vc = SHViewController(image: imageToBeFiltered)
+            vc.delegate = self
+            self.present(vc, animated:true, completion: nil)
+
+        }
+        
     }
     
     //    @IBAction func launchCamera(_ sender: UIButton) {
@@ -114,12 +124,8 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
     //    }
     
     @IBAction func launchLibrary(_ sender: UIButton) {
-        let vc = UIImagePickerController()
-        vc.delegate = self
-        vc.allowsEditing = true
-        
-        vc.sourceType = UIImagePickerControllerSourceType.photoLibrary
-        self.present(vc, animated: true, completion: nil)
+        picker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+        self.present(picker, animated: true, completion: nil)
     }
     
     override func didReceiveMemoryWarning() {
@@ -128,20 +134,23 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "composeSegue" {
-            let composeView = segue.destination as! ComposeViewController
-            composeView.chosenPhoto = self.capturedPhoto
-        }
+        let composeView = segue.destination as! ComposeViewController
+        composeView.chosenPhoto = capturedPhoto
     }
 }
 
 extension CameraViewController: SHViewControllerDelegate {
     func shViewControllerImageDidFilter(image: UIImage) {
         capturedPhoto = image
+        print(capturedPhoto!)
+        dismiss(animated: true) { 
+            self.performSegue(withIdentifier: "composeSegue", sender: self)
+        }
+        
     }
     
     func shViewControllerDidCancel(){
-        return
+        capturedPhoto = nil
         
     }
 }

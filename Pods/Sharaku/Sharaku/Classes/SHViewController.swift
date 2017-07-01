@@ -132,7 +132,7 @@ public class SHViewController: UIViewController {
         let outputCGImage = context.createCGImage((filter?.outputImage!)!, from: (filter?.outputImage!.extent)!)
 
         // 5 - convert filtered CGImage to UIImage
-        let filteredImage = UIImage(cgImage: outputCGImage!)
+        let filteredImage = UIImage(cgImage: outputCGImage!, scale: image.scale, orientation: image.imageOrientation)
 
         return filteredImage
     }
@@ -158,7 +158,6 @@ public class SHViewController: UIViewController {
         if let delegate = self.delegate {
             delegate.shViewControllerImageDidFilter(image: (imageView?.image)!)
         }
-        dismiss(animated: true, completion: nil)
     }
 }
 

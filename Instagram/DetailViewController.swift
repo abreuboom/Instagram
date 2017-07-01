@@ -17,8 +17,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var likeLabel: UILabel!
     @IBOutlet weak var captionLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
-    
-    @IBOutlet weak var commentView: UITableView!
+    @IBOutlet weak var likeButton: UIButton!
     
     var post: PFObject?
     
@@ -60,13 +59,30 @@ class DetailViewController: UIViewController {
                     }
                 })
             }
-            if let likeCount = post?["likesCount"] as? Int {
+            if let likes = post?["likeList"] as? [String] {
+                let likeCount = likes.count
+                let user = PFUser.current()
+                let id = user?.objectId!
                 if likeCount == 1 {
                     likeLabel.text = "\(likeCount) like"
+                    print(likes)
+                    print("TableView function: \(likes.contains(id!))")
+                    if likes.contains(id!) == true {
+                        likeButton.imageView?.image = #imageLiteral(resourceName: "heart-filled")
+                    }
+                }
+                else if likeCount > 1 {
+                    likeLabel.text = "\(likeCount) likes"
+                    if likes.contains(id!) == true {
+                        likeButton.imageView?.image = #imageLiteral(resourceName: "heart")
+                    }
                 }
                 else {
-                    likeLabel.text = "\(likeCount) likes"
+                    likeLabel.text = "0 likes"
+                    likeButton.imageView?.image = #imageLiteral(resourceName: "heart")
                 }
+                
+                
             }
             if let caption = post?["caption"] {
                 captionLabel.text = caption as? String

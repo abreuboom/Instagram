@@ -19,22 +19,20 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     var isMoreDataLoading = false
     var loadingMoreView:InfiniteScrollActivityView?
     
-    var queryLimit = 20
+    let refreshControl = UIRefreshControl()
     
-    override func viewWillAppear(_ animated: Bool) {
-        
-    }
+    var queryLimit = 20
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        activityIndicator.startAnimating()
+        
         
         let attributes = [NSFontAttributeName : UIFont(name: "Sugarstyle Millenial", size: 30)!, NSForegroundColorAttributeName : UIColor.black]
         self.navigationController?.navigationBar.titleTextAttributes = attributes
         
         // Initialize a UIRefreshControl
-        let refreshControl = UIRefreshControl()
+        
         refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
         // add refresh control to table view
         postView.insertSubview(refreshControl, at: 0)
@@ -91,8 +89,22 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func refreshControlAction(_ refreshControl: UIRefreshControl) {
-        refreshControl.endRefreshing()
-        getData()
+        let query = PFQuery(className: "Post")
+        query.includeKey("author")
+        query.limit = queryLimit
+        query.addDescendingOrder("createdAt")
+        
+        query.findObjectsInBackground() {(allPosts: [PFObject]?, error: Error?) -> Void in
+            if let error = error {
+                self.alert()
+                print(error.localizedDescription)
+            } else {
+                self.posts = allPosts!
+                self.postView.reloadData()
+                self.refreshControl.endRefreshing()
+            }
+        }
+        postView.reloadData()
     }
     
     func alert() {
@@ -107,7 +119,8 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         present(alertController, animated: true)
     }
     
-    func getData () {
+    func getData() {
+        activityIndicator.startAnimating()
         let query = PFQuery(className: "Post")
         query.includeKey("author")
         query.limit = queryLimit
@@ -120,12 +133,15 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
             } else {
                 self.posts = allPosts!
                 self.postView.reloadData()
-                
+                self.activityIndicator.stopAnimating()
             }
         }
         postView.reloadData()
-        activityIndicator.stopAnimating()
-        
+    }
+    
+    func getDataAfterNewPost() {
+        activityIndicator.startAnimating()
+        getData()
     }
     
     func prettyDate(date: String) -> String{
@@ -178,23 +194,27 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
             })
         }
         
-        if let likes = post["likeList"] as? [PFUser] {
+        if let likes = post["likeList"] as? [String] {
             let likeCount = likes.count
-            print(likeCount)
+            let user = PFUser.current()
+            let id = user?.objectId!
             if likeCount == 1 {
                 cell.likes.text = "\(likeCount) like"
-                if likes.contains(PFUser.current()!) == true {
+                print(likes)
+                print("TableView function: \(likes.contains(id!))")
+                if likes.contains(id!) == true {
                     cell.likeButton.imageView?.image = #imageLiteral(resourceName: "heart-filled")
                 }
             }
             else if likeCount > 1 {
                 cell.likes.text = "\(likeCount) likes"
-                if likes.contains(PFUser.current()!) == true {
-                    cell.likeButton.imageView?.image = #imageLiteral(resourceName: "heart-filled")
+                if likes.contains(id!) == true {
+                    cell.likeButton.imageView?.image = #imageLiteral(resourceName: "heart")
                 }
             }
             else {
                 cell.likes.text = "0 likes"
+                cell.likeButton.imageView?.image = #imageLiteral(resourceName: "heart")
             }
             
             
@@ -205,6 +225,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
         cell.likeButton.tag = indexPath.section
+        
         
         cell.selectionStyle = .none
         
@@ -263,21 +284,27 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
                 print(error?.localizedDescription)
                 print("nope")
             } else {
-                if let likeList = post?["likeList"] as? [PFUser]{
-                    if likeList.contains(PFUser.current()!) {
-                        post?.remove(PFUser.current()!, forKey: "likeList")
+                
+                if let likeList = post?["likeList"] as? [String]{
+                    let user = PFUser.current()
+                    let id = user?.objectId
+                    print("LikePost function: \(likeList.contains(id!))")
+                    if likeList.contains(id!) {
+                        post?.remove(id!, forKey: "likeList")
+                        
                         sender.imageView?.image = #imageLiteral(resourceName: "heart")
                         print("unliked post")
                     }
                     else {
-                        post?.addUniqueObject(PFUser.current()!, forKey:"likeList")
+                        post?.addUniqueObject(id!, forKey:"likeList")
                         sender.imageView?.image = #imageLiteral(resourceName: "heart-filled")
                         print("liked post")
                     }
+                    post?.setValue(likeList.count, forKeyPath: "likesCount")
                     post?.saveInBackground()
+                    self.getData()
                     self.postView.reloadData()
                 }
-                
             }
         }
     }

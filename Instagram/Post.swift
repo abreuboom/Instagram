@@ -32,6 +32,7 @@ class Post: NSObject {
         post["likesCount"] = 0
         post["commentsCount"] = 0
         post["likeList"] = []
+        post["commentList"] = [[]]
         
         // Save object (following function will save the object in Parse asynchronously)
         post.saveInBackground { (success, error) in
